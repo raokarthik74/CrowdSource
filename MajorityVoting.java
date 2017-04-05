@@ -78,48 +78,61 @@ public class MajorityVoting {
 	
 	
 	public static void main (String args[]){
-		List <Double> arr = new ArrayList<>();
-		double num1=0.0, num2=0.0, num3=0.0;
-		arr.add(0.7);
-//		arr.add(0.7);
-//		arr.add(0.7);
-		double ars;
-		// comment out the following lines to generate ARS for random set of workers
-//		for(int i=0; i<10; i++){
-//			num1 = Math.random();
-//			num2 = Math.random();
-//			num3 = Math.random();
-//			System.out.println("num1 : "+num1+"\nnum2 : "+num2+" \nnum3 : "+num3);
-//			arr.add(num1);
-//			arr.add(num2);
-//			arr.add(num3);
-//			System.out.println("ARS : "+calculateARS(prepareWorkers(arr), arr)+"");
-//		}
-		// the following lines keeps on adding workers till required ARS is reached
-//		ars = calculateARS(prepareWorkers(arr), arr);
-//		System.out.println(ars+"");
-//		while(ars < 0.9){
-//			arr.add(0.7);
-//			ars = calculateARS(prepareWorkers(arr), arr);
-//			System.out.println(ars+"");
-//			System.out.println(arr.count+"");
-//		}
-		// the following increases the reputation score of fixed number of workers till required ARS is reached
-		ars = calculateARS(prepareWorkers(arr), arr);
-		System.out.println(ars+"");
-		double repScore = 0.1;
-		while(ars < 0.9){
-			arr = new ArrayList<>();
-			arr.add(repScore);
-			arr.add(repScore);
-			arr.add(repScore);
-			ars = calculateARS(prepareWorkers(arr), arr);
-			System.out.println(ars+"");
-			repScore += 0.1;
+		workersWithRandomReputationScore();
+//		fixedReputationScoreIncreasingWorkers();
+//		fixedWorkersIncreasingReputationScore();
 		}
-//		System.out.println("ARS : "+calculateARS(prepareWorkers(arr), arr)+"");
-//		System.out.println("done");
+	
+	//generate ARS for set of workers with random reputation score
+		public static void workersWithRandomReputationScore(){
+			List <Double> arr = new ArrayList<>();
+			double num1=0.0, num2=0.0, num3=0.0;
+			arr.add(0.7);
+			arr.add(0.7);
+			arr.add(0.7);
+			double ars;
+			for(int i=0; i<10; i++){
+				num1 = Math.random();
+				num2 = Math.random();
+				num3 = Math.random();
+				arr.add(num1);
+				arr.add(num2);
+				arr.add(num3);
+				System.out.print(String.format("%.2f", calculateARS(prepareWorkers(arr), arr))+"\t");
+				System.out.print(num1+"\t"+num2+"\t"+num3+"\n");
+			}
+		}
+	
+	// the following lines keeps on adding workers till required ARS is reached
+		public static void fixedReputationScoreIncreasingWorkers(){
+			List <Double> arr = new ArrayList<>();
+			double ars = 0.0;
+			while(ars < 0.9){
+				arr.add(0.7);
+				ars = calculateARS(prepareWorkers(arr), arr);
+				System.out.println(ars+"");
+//				System.out.println("Number of Workers : "+arr.size());
+			}
+		}
+	
+	// the following increases the reputation score of fixed number of workers till required ARS is reached
+		public static void fixedWorkersIncreasingReputationScore(){
+			List <Double> arr = new ArrayList<>();
+			double ars = 0.0;
+			double repScore = 0.1;
+			while(ars < 0.9){
+				arr = new ArrayList<>();
+				arr.add(repScore);
+				arr.add(repScore);
+				arr.add(repScore);
+				ars = calculateARS(prepareWorkers(arr), arr);
+				System.out.println("current reputation score : " + repScore);
+				System.out.println(ars+"");
+				repScore = repScore + 0.1;
+		}
 	}
+	
+	
 }
 
 
